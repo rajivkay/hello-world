@@ -5,5 +5,7 @@
      timeout(time:5, unit:'MINUTES') {
          input message:'Approve deployment?', submitter: 'admin'
      }
-     bat ""${mvnHome}"\\bin\\mvn -B verify"
+     bat ""${mvnHome}"\\bin\\mvn -B -Dmaven.test.failure.ignore verify"
+     archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+     junit '**/target/surefire-reports/TEST-*.xml'
   }
